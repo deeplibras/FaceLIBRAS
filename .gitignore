@@ -1,0 +1,8 @@
+*.pyc
+*.*~
+/history
+/results
+/datasets/CK+
+/datasets/DeepLIBRAS
+/datasets/KDEF
+/datasets/yalefaces
