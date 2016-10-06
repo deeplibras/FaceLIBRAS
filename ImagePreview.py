@@ -9,7 +9,7 @@ import numpy as np
 import datasets.Datasets as Datasets
 
 # Configure database
-database   = 'CK+'
+database   = 'DeepLIBRAS'
 nb_classes = 7
 
 # Read the data

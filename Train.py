@@ -9,19 +9,19 @@ import os
 import Utils
 
 # Configure train
-nb_epoch = 500
+nb_epoch = 1000
 batch_size = 60
 k = 10
 
 # Set model shape
 model_shape = (1, 100, 100)
-database = 'KDEF'
+database = 'CK+'
 nb_classes = 7
 
 # Print the train start time
 startTime = datetime.datetime.now()
 
-for i in range(4,7):
+for i in range(7,8):
 	# Import model
 	model, model_number = Models.loadModel01(nb_classes, model_shape)
 	if i == 0:	
@@ -38,6 +38,8 @@ for i in range(4,7):
 		model, model_number = Models.loadModel07(nb_classes, model_shape)
 	if i == 6:	
 		model, model_number = Models.loadModel08(nb_classes, model_shape)
+	if i == 7:	
+		model, model_number = Models.loadModel09(nb_classes, model_shape)
 
 	print('Training model ' + str(model_number))
 
@@ -59,7 +61,9 @@ for i in range(4,7):
 			verbose=1, 
 			validation_data=(X_test, Y_test),
 			shuffle=True)
-
+	'''
+	model, hist = Models.trainWithImageAugmentation(model, batch_size, nb_epoch, X_train, Y_train, X_test, Y_test)
+	'''
 	# Save iteration history
 	Utils.saveHistory(database, hist, model_number)
 

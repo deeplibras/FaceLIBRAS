@@ -128,6 +128,29 @@ def loadModel08(nb_classes, input_shape):
 
 	return model, 8
 
+def loadModel09(nb_classes, input_shape):
+	model = Sequential()
+	model.add(Convolution2D(32, 28, 28, border_mode='same', activation='tanh', input_shape=input_shape, bias=True))
+	model.add(Convolution2D(64, 28, 28, border_mode='same', activation='tanh', bias=True))
+	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(Convolution2D(64, 14, 14, border_mode='same', activation='tanh', bias=True))
+	model.add(Convolution2D(128, 14, 14, border_mode='same', activation='tanh', bias=True))
+	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(Convolution2D(128, 10, 10, border_mode='same', activation='tanh', bias=True))
+	model.add(Convolution2D(128, 10, 10, border_mode='same', activation='tanh', bias=True))
+	model.add(MaxPooling2D((2,2), strides=(2,2)))
+	model.add(Convolution2D(128, 5, 5, border_mode='same', activation='tanh', bias=True))
+	model.add(Convolution2D(128, 5, 5, border_mode='same', activation='tanh', bias=True))
+
+	model.add(Flatten())
+
+	model.add(Dense(500, activation='tanh'))
+	model.add(Dropout(0.25))
+	model.add(Dense(150, activation='tanh'))
+	model.add(Dense(nb_classes, activation='softmax'))
+
+	return model, 9
+
 def compileSGD(model):
 	sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
 	model.compile(loss='categorical_crossentropy',
@@ -155,11 +178,19 @@ def trainWithImageAugmentation(model, batch_size, nb_epoch, X_train, Y_train, X_
 
 	datagen.fit(X_train)
 
+	for X_batch, y_batch in datagen.flow(X_train, Y_train, batch_size=9):
+		for i in range(0, 9):
+			pyplot.subplot(330+1+i)
+			img = X_batch[i]
+			pyplot.imshow(img.reshape(100, 100), cmap=pyplot.get_cmap('gray'))
+		pyplot.show()
+		break
+
 	# Fits the model
-	model.fit_generator(datagen.flow(X_train, Y_train,
+	hist = model.fit_generator(datagen.flow(X_train, Y_train,
 		                batch_size=batch_size),
 		                samples_per_epoch=X_train.shape[0],
 		                nb_epoch=nb_epoch,
 		                validation_data=(X_test, Y_test))
 
-	return model
+	return model, hist

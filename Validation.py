@@ -9,9 +9,9 @@ import os
 import Utils
 
 # Configure train
-nb_epoch = 1
-batch_size = 10
-k = 2
+nb_epoch = 250
+batch_size = 60
+k = 10
 
 # Set model shape
 model_shape = (1, 100, 100)
