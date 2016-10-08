@@ -1,8 +1,8 @@
 # FaceLIBRAS
 A Deep Convolutional Neural Network for facial expression classification.
 
-# Accuracy
-The model 08 get ~87% of accuracy. The others models are still in test with new data.
+# Best model / Accuracy
+The best model is the model 08 (load from Models.loadModel08() function) getting ~87% of accuracy. The others models are still in test with new data.
 
 ![Accuracy](http://i.imgur.com/FZwvh8n.png)
 
