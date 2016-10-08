@@ -1,3 +1,8 @@
+'''
+A file to hold the models struture.
+The model with the bests results is in loadModel08() function
+'''
+
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
