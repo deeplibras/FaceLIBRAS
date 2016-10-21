@@ -32,12 +32,12 @@ def loadTrainAndTest(basePath, nb_classes):
 
 '''
 Load any database in folds
-k         = The numbers of folds
-i         = The fold iteration
-basePath  = The database base path(DeepLIBRAS, KDEF, CK+)
-nb_classe = The number of classes in database
+k          = The numbers of folds
+i          = The fold iteration
+basePath   = The database base path(DeepLIBRAS, KDEF, CK+)
+nb_classes = The number of classes in database
 '''
-def loadBatchs(k, iteration, basePath, nb_classes):
+def loadBatchs(k, iteration, basePath, nb_classes, resize):
 	# Get and read the info file
 	info = os.path.join(os.path.dirname(__file__), basePath+'/info.txt')
 	lines = None
@@ -54,8 +54,8 @@ def loadBatchs(k, iteration, basePath, nb_classes):
 	train = lines[0:start] + lines[end:len(lines)]
 
 	# Read the data
-	X_train, Y_train = read(train, basePath)
-	X_test, Y_test   = read(test, basePath)
+	X_train, Y_train = read(train, basePath, resize)
+	X_test, Y_test   = read(test, basePath, resize)
 
 	# Convert class to categorical
 	Y_train = np_utils.to_categorical(np.array(Y_train), nb_classes)
@@ -70,7 +70,7 @@ Suffle the read data
 fileList = The file list
 basePath = The path
 '''
-def read(fileList, basePath):
+def read(fileList, basePath, resize):
 	X_data_unsuffle = []
 	Y_data_unsuffle = []
 	X_data = []
@@ -83,12 +83,13 @@ def read(fileList, basePath):
 		# Read the image
 		img = Image.open(os.path.join(os.path.dirname(__file__), basePath+'/'+info[0])).convert('L')
 		
-		if(basePath == 'DeepLIBRAS'):
-			# Split the coords
-			coords = info[2].split(',')
-			img = ImageCutter.cut(img, {'x':int(coords[0]), 'y':int(coords[1])}, 50)
-		else:
-			img = makeThumb(img)
+		if resize is True:
+			if(basePath == 'DeepLIBRAS'):
+				# Split the coords
+				coords = info[2].split(',')
+				img = ImageCutter.cut(img, {'x':int(coords[0]), 'y':int(coords[1])}, 50)
+			else:
+				img = makeThumb(img)
 		
 		# Append image to input list as a numpy array
 		X_data_unsuffle.append(np.asarray(img).reshape(1, 100, 100)) # FORMATO (CANAIS, ALTURA, LARGURA)

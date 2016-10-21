@@ -163,6 +163,8 @@ def compileSGD(model):
 Train a model with data augmentation
 '''
 def trainWithImageAugmentation(model, batch_size, nb_epoch, X_train, Y_train, X_test, Y_test):
+	print("DATA AUGMENTATION ON")
+
 	# Define data preparation
 	datagen = ImageDataGenerator(
 		featurewise_center=False,  # set input mean to 0 over the dataset

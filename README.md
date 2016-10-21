@@ -1,15 +1,20 @@
 # FaceLIBRAS
-A Deep Convolutional Neural Network for facial expression classification.
+FaceLIBRAS is a Convolutional Neural Network for facial expression classification.
 
-# Accuracy
-The model 08 get ~87% of accuracy. The others models are still in test with new data.
+# How to use
+- Download this repository
+- Import the facelibras() function inside the facelibras.py
 
-![Accuracy](http://i.imgur.com/FZwvh8n.png)
-
-# How to run
-Open the main.py and edit the line 23 to load the model you want (Avaliable models in Models.py) or add a path to a Keras .HDF file in line 14 to run a pre-trained model
-Execute the main.py with the command:
-
+```python
+facelibras(database_path, nb_epoch, use_augmentation = None, resize = None)
 ```
-python main.py
-```
+
+- database_path: The path to database folder
+- nb_epoch: The number of epochs to use
+- use_augmentation: If should use image augmentation or not (defaul = False)
+- resize: If the image need to be resize to 100x100 (default = True)
+
+The function returns the train history and the trained model. You can use the functions in Utils.py to save the history as .CSV or plot
+
+# Datasets
+Read the [datasets creation](https://github.com/deeplibras/facelibras/tree/master/datasets)
